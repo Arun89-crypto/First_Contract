@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/main.png" width="100%"></img>
+</p>
+
 # BlockChain - Solidity - First Contract
 
 # IDE used for solidity
