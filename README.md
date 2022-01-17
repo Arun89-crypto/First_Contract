@@ -110,7 +110,7 @@ contract SimpleStorage{
         uint256 favoriteNumber;
         string name;
     }
-    
+
     // making a structure object
     People public person = People({favoriteNumber : 2, name : "Patrick"});
 }
@@ -138,7 +138,7 @@ contract SimpleStorage{
     function addPerson(string memory _name, uint256 _favoriteNumber) public{
         people.push(People({favoriteNumber : _favoriteNumber, name : _name}));
     }
- 
+
     // function to view favorite number
     function retrieve() public view returns(uint256) {
         return favoriteNumber;
@@ -174,7 +174,7 @@ contract SimpleStorage{
         uint256 favoriteNumber;
         string name;
     }
-    
+
 
     People[] public people; // declaring a dynamic array
 
@@ -186,7 +186,7 @@ contract SimpleStorage{
         people.push(People({favoriteNumber : _favoriteNumber, name : _name}));
         nameToFavoriteNumber[_name] = _favoriteNumber;
     }
- 
+
     // function to view favorite number
     function retrieve() public view returns(uint256) {
         return favoriteNumber;
@@ -212,7 +212,7 @@ In this contract we can :
 - Step 2 : Click Deploy. Then a popup will show up on Metamask to confirm the payment
 - Step 3: Confirm the payment
 
-After this we can check the transaction hash generated on payment and verify that on Rinkby Etherscan 
+After this we can check the transaction hash generated on payment and verify that on Rinkby Etherscan
 
 ```solidity
 // Transaction Hash
@@ -229,9 +229,7 @@ Now everytime we interact with our deployment we have to pay some gas fee
 
 - Click Add Person.
 - Metamask popup will appear for payment.
-    
-    ![Screenshot 2022-01-16 at 9.54.23 PM.png](BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/Screenshot_2022-01-16_at_9.54.23_PM.png)
-    
+  ![Screenshot 2022-01-16 at 9.54.23 PM.png](BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/Screenshot_2022-01-16_at_9.54.23_PM.png)
 - After confirming the payment hash will be generated. Check it on rinkby etherscan
 
 ```solidity
@@ -241,3 +239,69 @@ Now everytime we interact with our deployment we have to pay some gas fee
 ## Our Deployed Contract
 
 [https://rinkeby.etherscan.io/address/0x924bdf9655e84a65cb9af6431ac9e7eb04a550f8](https://rinkeby.etherscan.io/address/0x924bdf9655e84a65cb9af6431ac9e7eb04a550f8)
+
+## --------------------------------------------------------------------------------------------------------------
+
+# BlockChain - Solidity(Advance Contracts)
+
+## Creating a “Storage Factory” using simple storage we created in basics and using it to create multiple “Simple Storage” for user who interacts with “Storage Factory”
+
+```solidity
+// SPDX_License_Identifier: MIT
+pragma solidity ^0.6.0;
+
+// importing simple storage contract
+import "./SimpleStorage.sol";
+
+// creating storage factory contract
+contract StorageFactory{
+
+    // creating a simple storage array that will store all the contracts created by the user
+    SimpleStorage[] public simpleStorageArray;
+
+    // function to create a new simpleStorage contract
+    function createSimpleStorageContract() public{
+        SimpleStorage simpleStorage = new SimpleStorage(); // creating a simple storage contract instance
+        simpleStorageArray.push(simpleStorage); // pushing created contract to simpleStorageArray
+    }
+
+    // To interact with the created contract we need
+    // * Address
+    // * Application Binary Interface (ABI)
+
+    // Function to store value in the contract defined by the index of array
+    function sFStore(uint256 _simpleStorageIndex, uint256 _simpleStorageNumber) public {
+        // getting the contract to interact
+        SimpleStorage simpleStorage = SimpleStorage(address(simpleStorageArray[_simpleStorageIndex]));
+        // storing the value in contarct
+        simpleStorage.store(_simpleStorageNumber);
+    }
+
+    // Function to call the retrieve function in contract
+    function sFGet(uint256 _simpleStorageIndex) public view returns(uint256){
+        // getting the contract to interact
+        SimpleStorage simpleStorage = SimpleStorage(address(simpleStorageArray[_simpleStorageIndex]));
+        // storing the value in contarct
+        return simpleStorage.retrieve();
+    }
+}
+```
+
+![Screenshot 2022-01-16 at 11.01.54 PM.png](BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/Screenshot_2022-01-16_at_11.01.54_PM.png)
+
+### Interaction window will look something like this
+
+## If we want to inherit all the functions from on contract to another (like in inheritance in loops) we can do some thing like this
+
+```solidity
+// SPDX_License_Identifier: MIT
+pragma solidity ^0.6.0;
+
+// importing simple storage contract
+import "./SimpleStorage.sol";
+
+// creating storage factory contract
+// 'is' contract__name will do our inheritence job
+contract StorageFactory is SimpleStorage{
+}
+```
