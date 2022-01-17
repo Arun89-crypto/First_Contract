@@ -229,7 +229,12 @@ Now everytime we interact with our deployment we have to pay some gas fee
 
 - Click Add Person.
 - Metamask popup will appear for payment.
-  ![Screenshot 2022-01-16 at 9.54.23 PM.png](BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/Screenshot_2022-01-16_at_9.54.23_PM.png)
+
+<p align="center">
+	<img src="BlockChain%20-%20Solidity%2032dbc76c3bc14f09992abbdd5dc0af13/Screenshot_2022-01-16_at_9.54.23_PM.png" width="200px"></img>
+</p>
+    
+>>>>>>> 0311ce94f26f573223b4ce136ae725b60302c3a3
 - After confirming the payment hash will be generated. Check it on rinkby etherscan
 
 ```solidity
